@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/default :: layout(~{::title}, ~{::content})}">
+<head>
+  <meta charset="UTF-8">
+  <title>haneolj.com</title>
+</head>
+<body>
+<div th:fragment="content">
+  <div class="container">
+    <!-- 프로필 섹션 -->
+    <div th:replace="~{home/profile-card :: profile-card}"></div>
+
+
+    <!-- 최근 포스트 섹션 (나중에 구현) -->
+    <div class="row my-5">
+      <div class="col-12">
+        <h2>최근 포스트</h2>
+        <p>포스트 목록이 표시될 영역입니다. 이 기능은 나중에 구현할 예정입니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

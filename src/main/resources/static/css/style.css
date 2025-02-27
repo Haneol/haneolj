@@ -1,0 +1,94 @@
+/* Pretendard 폰트 불러오기 */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+/* 색상 변수 정의 */
+:root {
+  /* 그레이 스케일 */
+  --gray-50: #F8FAFC;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-300: #CBD5E1;
+  --gray-400: #94A3B8;
+  --gray-500: #64748B;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1E293B;
+  --gray-900: #0F172A;
+
+  /* 브랜드 색상 */
+  --primary: #EE5F6A;
+  --primary-dark: #E14E58;
+
+  /* 기본 색상 */
+  --white: #FFFFFF;
+  --black: #000000;
+}
+
+/* 글로벌 스타일 */
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--gray-900);
+  line-height: 1.6;
+  background-color: var(--gray-50);
+}
+
+/* 헤더 스타일 */
+.navbar {
+  box-shadow: none;
+  background-color: var(--white);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--primary);
+}
+
+/* 푸터 스타일 */
+.footer {
+  border-top: 1px solid var(--gray-200);
+  margin-top: 3rem;
+  background-color: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* 텍스트 색상 클래스 */
+.text-primary {
+  color: var(--primary) !important;
+}
+
+.text-gray-500 {
+  color: var(--gray-500) !important;
+}
+
+.text-gray-700 {
+  color: var(--gray-700) !important;
+}
+
+.text-gray-900 {
+  color: var(--gray-900) !important;
+}
+
+/* 배경 색상 클래스 */
+.bg-gray-50 {
+  background-color: var(--gray-50) !important;
+}
+
+.bg-gray-100 {
+  background-color: var(--gray-100) !important;
+}
+
+/* 아이콘 크기 클래스 */
+.icon-24 {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}

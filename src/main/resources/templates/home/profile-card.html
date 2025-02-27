@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<!-- 프로필 카드 -->
+<div th:fragment="profile-card" class="profile-card d-flex justify-content-between align-items-center">
+  <div class="profile-image">
+    <img th:src="@{/images/profile.jpg}" alt="프로필 이미지" width="128" height="128" class="rounded-5">
+  </div>
+  <div class="profile-details">
+    <div class="profile-info">
+      <h2 class="profile-name">정한얼(haneolj)</h2>
+      <p class="profile-title">Backend Developer</p>
+      <p class="profile-description">서비스의 안정성을 높이는 동시에 사용자 경험을 개선하는데 깊은 관심이 있는 산업 백엔드 개발자입니다.</p>
+    </div>
+    <div class="profile-links">
+      <a th:href="@{/graphql}" class="link-button">그래프로 보기</a>
+      <a th:href="@{/category}" class="link-button active">카테고리로 보기</a>
+    </div>
+    <div class="profile-updated">
+      <span th:text="'updated at ' + ${#temporals.format(updateTime, 'yyyy.MM.dd')}">updated at 2025.01.04</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

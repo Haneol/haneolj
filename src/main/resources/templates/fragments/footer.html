@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<footer th:fragment="footer" class="footer mt-5 py-3 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="text-muted">&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2025</span>
+          JEONG HANEOL. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <div class="social-links">
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
