@@ -1,3 +1,21 @@
+/* css reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
 /* Pretendard 폰트 불러오기 */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
@@ -90,5 +108,186 @@ body {
   .container {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+}
+
+.home {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (min-width: 576px) {
+  .home {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.container .home {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* 프로필 카드 */
+.profile-card {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 128px;
+}
+
+.profile-info {
+  margin-left: 20px;
+  height: 128px;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gray-700);
+}
+
+.profile-job-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gray-400);
+}
+
+.profile-description {
+  font-size: 16px;
+  color: var(--gray-400);
+}
+
+/* 모바일 화면에서는 br 태그 숨기기 */
+@media (max-width: 768px) {
+  .profile-description br {
+    display: none;
+  }
+}
+
+/* 포스트 메뉴 스타일 */
+.post-menu {
+  width: 100%;
+}
+
+.post-menu-header {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  background-color: var(--gray-200);
+  border-radius: 30px;
+  padding: 10px 20px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* 탭 메뉴 스타일 */
+.post-menu-tabs {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.tab-item {
+  position: relative;
+}
+
+.tab-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray-700);
+  padding: 16px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 20px;
+  position: relative;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+}
+
+.tab-link.active {
+  color: var(--primary);
+}
+
+/* 아이콘 스타일 */
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* 활성 상태일 때만 활성 아이콘 표시 */
+.tab-link .icon-active {
+  display: none;
+}
+
+.tab-link .icon-inactive {
+  display: inline-block;
+}
+
+.tab-link.active .icon-active {
+  display: inline-block;
+}
+
+.tab-link.active .icon-inactive {
+  display: none;
+}
+
+/* 선택 탭 인디케이터 (밑에 사각형 영역) */
+.tab-indicator {
+  height: 4px;
+  background-color: var(--primary);
+  position: absolute;
+  bottom: -11px;
+  left: 6px;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tab-link.active .tab-indicator {
+  opacity: 1;
+}
+
+/* 콘텐츠 뷰 스타일 */
+.content-views {
+  margin-top: 20px;
+}
+
+.view-content {
+  display: none;
+}
+
+.view-content.active {
+  display: block;
+}
+
+/* 업데이트 정보 스타일 */
+.update-info {
+  color: var(--gray-500);
+  font-size: 14px;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .post-menu-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .post-menu-tabs {
+    width: 100%;
+  }
+
+  .update-info {
+    align-self: flex-end;
   }
 }
