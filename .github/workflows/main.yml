@@ -53,10 +53,11 @@ jobs:
             # 새 컨테이너 실행
             docker run -d \
               --name haneolj-container \
+              --network app-network \
               -p 8080:8080 \
-              -e GITHUB_USERNAME=${{ secrets.IGITHUB_USERNAME }} \
-              -e GITHUB_REPO=${{ secrets.IGITHUB_REPO }} \
-              -e GITHUB_TOKEN=${{ secrets.IGITHUB_TOKEN }} \
-              -e OBSIDIAN_REPO_BRANCH=${{ secrets.OBSIDIAN_REPO_BRANCH }} \
-              -e OBSIDIAN_STUDY_PATH=${{ secrets.OBSIDIAN_STUDY_PATH }} \
-              ${{ secrets.DOCKERHUB_USERNAME }}/haneolj-site:latest
+              -e GITHUB_USERNAME="${{ secrets.IGITHUB_USERNAME }}" \
+              -e GITHUB_REPO="${{ secrets.IGITHUB_REPO }}" \
+              -e GITHUB_TOKEN="${{ secrets.IGITHUB_TOKEN }}" \
+              -e OBSIDIAN_REPO_BRANCH="${{ secrets.OBSIDIAN_REPO_BRANCH }}" \
+              -e OBSIDIAN_STUDY_PATH="${{ secrets.OBSIDIAN_STUDY_PATH }}" \
+              "${{ secrets.DOCKERHUB_USERNAME }}/haneolj-site:latest"
