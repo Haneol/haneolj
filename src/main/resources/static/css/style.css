@@ -110,6 +110,10 @@ body {
   object-fit: contain;
 }
 
+.footer-text {
+  color: var(--gray-400);
+}
+
 /* 반응형 조정 */
 @media (max-width: 768px) {
   .container {
@@ -165,7 +169,16 @@ body {
 
 .profile-description {
   font-size: 16px;
-  color: var(--gray-400);
+  color: var(--gray-500);
+}
+
+.link-text {
+  color: var(--primary) !important;
+  font-weight: 700;
+}
+
+.link-text:hover {
+  color: var(--primary-dark) !important;
 }
 
 /* 모바일 화면에서는 br 태그 숨기기 */

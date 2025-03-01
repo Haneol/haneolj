@@ -8,11 +8,12 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <p class="text-muted">&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2025</span>
+        <p class="footer-text">&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2025</span>
           JEONG HANEOL. All rights reserved.</p>
       </div>
       <div class="col-md-6 text-md-end">
-        <div class="social-links">
+        <div class="footer-text">
+          <p>Version <span th:text="${version}"></span></p>
         </div>
       </div>
     </div>

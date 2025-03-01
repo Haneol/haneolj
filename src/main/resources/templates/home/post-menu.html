@@ -7,7 +7,7 @@
   <div class="post-menu-header">
     <ul class="post-menu-tabs">
       <li class="tab-item">
-        <button type="button" class="tab-link active" id="graph-tab" data-view="graph">
+        <button type="button" class="tab-link" id="graph-tab" data-view="graph">
           <img th:src="@{/images/graph-view-enable.svg}" alt="" class="icon icon-active">
           <img th:src="@{/images/graph-view-disable.svg}" alt="" class="icon icon-inactive">
           <span>그래프로 보기</span>
@@ -15,7 +15,7 @@
         </button>
       </li>
       <li class="tab-item">
-        <button type="button" class="tab-link" id="category-tab" data-view="category">
+        <button type="button" class="tab-link active" id="category-tab" data-view="category">
           <img th:src="@{/images/category-view-enable.svg}" alt="" class="icon icon-active">
           <img th:src="@{/images/category-view-disable.svg}" alt="" class="icon icon-inactive">
           <span>카테고리로 보기</span>
@@ -31,12 +31,12 @@
   <!-- 콘텐츠 영역 -->
   <div class="content-views">
     <!-- 그래프 뷰 -->
-    <div id="graph-view" class="view-content active">
+    <div id="graph-view" class="view-content">
       <div th:replace="~{fragments/graph-content :: graph-content}"></div>
     </div>
 
     <!-- 카테고리 뷰 -->
-    <div id="category-view" class="view-content">
+    <div id="category-view" class="view-content active">
       <div th:replace="~{fragments/category-content :: category-content}"></div>
     </div>
   </div>
