@@ -405,14 +405,12 @@
 .sidebar {
   background-color: var(--gray-50);
   padding: 1.5rem;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .study-content {
   background-color: white;
   padding: 2rem;
-  border-radius: 5px;
+  border-radius: 20px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
