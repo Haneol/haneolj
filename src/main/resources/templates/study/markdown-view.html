@@ -3,6 +3,7 @@
       th:replace="~{layout/default :: layout(~{::title}, ~{::content})}">
 <head>
   <title th:text="${contentTitle} + ' - haneolj.com'">마크다운 문서 제목</title>
+  <meta name="current-file-path" th:content="${currentFilePath}" />
 </head>
 <body>
 <div th:fragment="content">

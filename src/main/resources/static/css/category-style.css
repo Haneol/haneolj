@@ -62,3 +62,25 @@
   margin-top: 5px;
   font-style: italic;
 }
+
+/* 활성화된 파일 항목 스타일 */
+.category-file.active {
+  color: var(--primary);
+  font-weight: 700;
+  position: relative;
+}
+
+.category-file.active::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--primary);
+  border-radius: 3px;
+}
+
+.category-file.active:hover {
+  color: var(--primary-dark);
+}

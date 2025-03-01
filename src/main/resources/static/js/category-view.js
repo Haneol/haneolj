@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
       item.classList.remove('collapsed');
     });
   }
+
+  // 현재 선택된 파일 스타일 추가
+  addActiveFileStyles();
 });
 
 // 현재 문서 경로를 찾아서 하이라이트하고 펼치는 함수
@@ -114,13 +117,73 @@ function findAndHighlightCurrentPath() {
 
     if (!foundMatch) {
       console.warn('현재 문서와 일치하는 카테고리 항목을 찾지 못했습니다.');
-      // 일치하는 항목을 찾지 못한 경우 최상위 디렉토리만 펼치기
-      const rootItems = document.querySelectorAll('.category-tree > .category-item');
-      rootItems.forEach(item => {
-        item.classList.remove('collapsed');
+
+      // 파일명 부분 비교로 다시 시도
+      fileItems.forEach(fileItem => {
+        const dataPath = fileItem.getAttribute('data-path');
+        if (!dataPath) return;
+
+        // 파일명만 추출하여 비교
+        const itemFileName = dataPath.split('/').pop().split('\\').pop();
+        const currentFileName = decodedPath.split('/').pop().split('\\').pop();
+
+        if (itemFileName === currentFileName) {
+          console.log('파일명 일치하는 항목 찾음:', dataPath);
+          fileItem.classList.add('active');
+
+          // 상위 디렉토리 펼치기
+          let parent = fileItem.closest('.category-item');
+          while (parent) {
+            parent.classList.remove('collapsed');
+            parent = parent.parentElement ? parent.parentElement.closest('.category-item') : null;
+          }
+          foundMatch = true;
+        }
       });
+
+      // 여전히 일치하는 항목을 찾지 못한 경우 최상위 디렉토리만 펼치기
+      if (!foundMatch) {
+        const rootItems = document.querySelectorAll('.category-tree > .category-item');
+        rootItems.forEach(item => {
+          item.classList.remove('collapsed');
+        });
+      }
     }
   } catch (error) {
     console.error('경로 처리 중 오류 발생:', error);
   }
+}
+
+// 활성화된 파일 항목에 스타일 추가
+function addActiveFileStyles() {
+  // 스타일 태그 생성
+  const styleTag = document.createElement('style');
+  styleTag.textContent = `
+    /* 활성화된 파일 항목 스타일 */
+    .category-file.active {
+      color: var(--primary);
+      font-weight: 700;
+      position: relative;
+    }
+    
+    /* 왼쪽에 강조 막대 표시 */
+    .category-file.active::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: var(--primary);
+      border-radius: 3px;
+    }
+    
+    /* 호버 효과 유지 */
+    .category-file.active:hover {
+      color: var(--primary-dark);
+    }
+  `;
+
+  // 스타일 태그를 헤드에 추가
+  document.head.appendChild(styleTag);
 }
