@@ -34,6 +34,12 @@ dependencies {
 	implementation 'org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r'
 	implementation 'org.eclipse.jgit:org.eclipse.jgit.ssh.apache:6.7.0.202309050840-r'
 
+
+	// CommonMark
+	implementation 'org.commonmark:commonmark:0.21.0'
+	implementation 'org.commonmark:commonmark-ext-task-list-items:0.21.0'
+	implementation 'org.commonmark:commonmark-ext-gfm-tables:0.21.0'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

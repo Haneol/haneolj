@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/default :: layout(~{::title}, ~{::content})}">
+<head>
+  <title th:text="${contentTitle} + ' - haneolj.com'">마크다운 문서 제목</title>
+</head>
+<body>
+<div th:fragment="content">
+  <div class="container">
+    <div class="row">
+      <!-- 사이드바 (카테고리 트리) -->
+      <div class="col-md-3">
+        <div class="sidebar sticky-top" style="top: 20px;">
+          <h5 class="mb-3">목차</h5>
+
+          <!-- 카테고리 트리 -->
+          <div th:if="${studyRoot != null}">
+            <ul class="category-tree">
+              <li th:replace="~{fragments/category-node :: render-node(${studyRoot}, 0)}"></li>
+            </ul>
+          </div>
+
+          <a th:href="@{/}" class="btn btn-outline-secondary btn-sm mt-3">
+            <i class="fas fa-arrow-left"></i> 홈으로 돌아가기
+          </a>
+        </div>
+      </div>
+
+      <!-- 메인 콘텐츠 (마크다운 내용) -->
+      <div class="col-md-9">
+        <div class="study-content">
+          <div class="study-header">
+            <h1 class="study-title" th:text="${contentTitle}">문서 제목</h1>
+            <div class="study-meta">
+              <span>
+                <i class="far fa-calendar-alt"></i>
+                <span th:text="${contentLastModified}">2025.01.04</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="study-body">
+            <div id="markdown-content" class="markdown-content" th:utext="${contentBody}">
+              마크다운 내용이 여기에 표시됩니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 하이라이트 JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script th:src="@{/js/markdown-view.js}"></script>
+</div>
+</body>
+</html>
