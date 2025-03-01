@@ -4,6 +4,8 @@ import com.haneolj.portfolio.dto.CategoryNodeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -35,6 +37,7 @@ public class StudyService {
 
 
     // Study 디렉토리 구조 반환
+    @Cacheable(value = "studyStructureCache", unless = "#result == null")
     public CategoryNodeDto getStudyStructure() {
         // Refresh가 필요한지 체크
         if (studyRoot == null || shouldRefresh()) {
@@ -58,8 +61,9 @@ public class StudyService {
     }
 
     // Study 디렉토리 구조 Refresh
+    @CacheEvict(value = {"studyStructureCache", "markdownHtmlCache", "fileContentCache"}, allEntries = true)
     public synchronized void refreshStudyStructure() {
-        log.info("스터디 구조 새로고침 시작");
+        log.info("스터디 구조 새로고침 시작 (캐시 초기화)");
         String repoPath = gitService.ensureRepository();
         log.info("저장소 경로: {}", repoPath);
 
