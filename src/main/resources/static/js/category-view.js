@@ -5,18 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const directories = document.querySelectorAll('.category-directory');
   console.log('카테고리 디렉토리 요소 수: ' + directories.length);
 
-  // 모든 디렉토리 초기화 - 처음에는 펼쳐진 상태로
-  const items = document.querySelectorAll('.category-item');
-  items.forEach(item => {
-    if (item.querySelector('.category-children')) {
-      // 최상위 카테고리만 펼치고, 나머지는 접기
-      const level = parseInt(item.getAttribute('data-level') || '0');
-      if (level > 0) {
-        item.classList.add('collapsed');
-      }
-    }
-  });
-
   // 클릭 이벤트 등록
   directories.forEach(dir => {
     dir.addEventListener('click', function(e) {
@@ -33,4 +21,106 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // 현재 페이지 경로 가져오기
+  const currentPath = window.location.pathname;
+  console.log('현재 페이지 경로:', currentPath);
+
+  // 모든 카테고리 항목 접기 (초기 상태)
+  const items = document.querySelectorAll('.category-item');
+  items.forEach(item => {
+    if (item.querySelector('.category-children')) {
+      item.classList.add('collapsed');
+    }
+  });
+
+  // 현재 경로가 마크다운 뷰인 경우 현재 항목과 상위 항목 펼치기
+  if (currentPath.includes('/study/view/')) {
+    // 현재 문서 파일 경로 찾기 시도
+    findAndHighlightCurrentPath();
+  } else {
+    // 마크다운 뷰가 아닌 경우 최상위 디렉토리만 펼치기
+    const rootItems = document.querySelectorAll('.category-tree > .category-item');
+    rootItems.forEach(item => {
+      item.classList.remove('collapsed');
+    });
+  }
 });
+
+// 현재 문서 경로를 찾아서 하이라이트하고 펼치는 함수
+function findAndHighlightCurrentPath() {
+  try {
+    const match = window.location.pathname.match(/\/study\/view\/([^/]+)/);
+    if (!match || !match[1]) {
+      console.error('URL에서 인코딩된 경로를 찾을 수 없습니다.');
+      return;
+    }
+
+    const encodedPath = match[1];
+    console.log('URL에서 추출한 인코딩된 경로:', encodedPath);
+
+    // Base64 디코딩 시도
+    let decodedPath;
+    try {
+      const base64Safe = encodedPath.replace(/-/g, '+').replace(/_/g, '/');
+      decodedPath = atob(base64Safe);
+      console.log('Base64 디코딩 결과:', decodedPath);
+    } catch (e) {
+      console.warn('Base64 디코딩 실패:', e);
+      console.log('URL 디코딩 시도...');
+
+      decodedPath = decodeURIComponent(encodedPath);
+      console.log('URL 디코딩 결과:', decodedPath);
+    }
+
+    if (!decodedPath) {
+      console.error('경로 디코딩 실패');
+      return;
+    }
+
+    // 모든 카테고리 파일 항목 순회
+    let foundMatch = false;
+    const fileItems = document.querySelectorAll('.category-file');
+    console.log('총 파일 항목 수:', fileItems.length);
+
+    fileItems.forEach(fileItem => {
+      const dataPath = fileItem.getAttribute('data-path');
+      const href = fileItem.getAttribute('href');
+
+      console.log(`파일 항목 검사 - href: ${href}, data-path: ${dataPath}`);
+
+      // 현재 경로 포함 여부 확인 (여러 방식으로 시도)
+      const isCurrentFile =
+          (dataPath && dataPath === decodedPath) ||
+          (dataPath && decodedPath.includes(dataPath)) ||
+          (href && href.includes(encodedPath));
+
+      if (isCurrentFile) {
+        console.log('현재 파일 찾음:', dataPath);
+        foundMatch = true;
+
+        // 현재 파일 항목에 active 클래스 추가
+        fileItem.classList.add('active');
+
+        // 현재 파일의 모든 상위 디렉토리 펼치기
+        let parent = fileItem.closest('.category-item');
+        while (parent) {
+          parent.classList.remove('collapsed');
+          console.log('상위 디렉토리 펼침:', parent);
+          parent = parent.parentElement ? parent.parentElement.closest('.category-item') : null;
+        }
+      }
+    });
+
+    if (!foundMatch) {
+      console.warn('현재 문서와 일치하는 카테고리 항목을 찾지 못했습니다.');
+      // 일치하는 항목을 찾지 못한 경우 최상위 디렉토리만 펼치기
+      const rootItems = document.querySelectorAll('.category-tree > .category-item');
+      rootItems.forEach(item => {
+        item.classList.remove('collapsed');
+      });
+    }
+  } catch (error) {
+    console.error('경로 처리 중 오류 발생:', error);
+  }
+}
