@@ -80,37 +80,37 @@
 /* 목록 스타일 */
 .markdown-content ul,
 .markdown-content ol {
-  margin-left: 1.5em;
-  margin-bottom: 1.2em;
-  padding-left: 1em;
+  margin-left: 1.5em !important;
+  margin-bottom: 1.2em !important;
+  padding-left: 1em !important;
 }
 
 .markdown-content ul {
-  list-style-type: disc;
+  list-style-type: disc !important;
 }
 
 .markdown-content ul ul {
-  list-style-type: circle;
+  list-style-type: circle !important;
 }
 
 .markdown-content ul ul ul {
-  list-style-type: square;
+  list-style-type: square !important;
 }
 
 .markdown-content ol {
-  list-style-type: decimal;
+  list-style-type: decimal !important;
 }
 
 .markdown-content ol ol {
-  list-style-type: lower-alpha;
+  list-style-type: lower-alpha !important;
 }
 
 .markdown-content ol ol ol {
-  list-style-type: lower-roman;
+  list-style-type: lower-roman !important;
 }
 
 .markdown-content li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5em !important;
 }
 
 /* 코드 스타일 */

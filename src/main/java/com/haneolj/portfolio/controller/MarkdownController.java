@@ -5,6 +5,7 @@ import com.haneolj.portfolio.service.StudyService;
 import com.haneolj.portfolio.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
@@ -22,12 +22,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class MarkdownController {
 
+    @Value("${app.version}")
+    private String appVersion;
+
     private final MarkdownService markdownService;
     private final StudyService studyService;
     private final StringUtils stringUtils;
 
     @GetMapping("/view/{encodedPath}")
     public String viewMarkdown(@PathVariable String encodedPath, Model model) {
+
+        model.addAttribute("version", appVersion);
+
         try {
             // Base64로 인코딩된 경로를 디코딩
             String decodedPath = stringUtils.decodeBase64Url(encodedPath);

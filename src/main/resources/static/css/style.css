@@ -10,8 +10,10 @@
   box-sizing: border-box;
 }
 
-ul,
-li {
+/* 특정 영역의 ul, li만 명시적으로 리셋 */
+.navbar ul, .navbar li,
+.footer ul, .footer li,
+.post-menu .post-menu-header ul, .post-menu .post-menu-header li {
   margin: 0;
   padding: 0;
   list-style: none;

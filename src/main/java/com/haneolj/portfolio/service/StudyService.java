@@ -77,7 +77,7 @@ public class StudyService {
             lastUpdate = LocalDateTime.now();
 
             // 디렉토리 구조 디버깅
-            validateAndLogStructure(studyRoot, 0);
+//            validateAndLogStructure(studyRoot, 0);
 
             log.info("스터디 구조 새로고침 완료");
         } catch (IOException e) {
