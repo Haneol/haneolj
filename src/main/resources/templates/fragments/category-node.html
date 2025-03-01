@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<body>
+<!-- 카테고리 노드 -->
+<li th:fragment="render-node(node, level)" class="category-item"
+    th:classappend="${node.directory} ? '' : 'category-file-item'"
+    th:data-path="${node.path}"
+    th:data-name="${node.name}"
+    th:data-level="${level}"
+    th:data-type="${node.directory ? 'directory' : 'file'}">
+
+  <!-- 디렉토리 -->
+  <th:block th:if="${node.directory}">
+    <div class="category-directory">
+      <span class="category-toggle">
+        <i class="fas fa-caret-down"></i>
+      </span>
+      <span th:text="${node.name}">카테고리 이름</span>
+      <!-- 자식 수 표시 -->
+      <span class="text-muted" th:text="${'(' + node.children.size() + ')'}"></span>
+    </div>
+
+    <!-- 자식 노드가 있는 경우 -->
+    <ul class="category-children" th:if="${!node.children.isEmpty()}">
+      <th:block th:each="child : ${node.children}">
+        <li th:replace="~{fragments/category-node :: render-node(${child}, ${level + 1})}"></li>
+      </th:block>
+    </ul>
+
+    <!-- 자식 노드가 없는 경우 메시지 표시 -->
+    <div class="empty-children-message" th:if="${node.children.isEmpty()}">
+      <small class="text-muted">하위 항목 없음</small>
+    </div>
+  </th:block>
+
+  <!-- 파일(md) -->
+  <th:block th:if="${!node.directory}">
+    <a href="#" class="category-file">
+      <span th:text="${node.name}">파일 이름</span>
+      <span class="category-modified-date" th:text="${node.lastModifiedFormatted}">2025.03.01</span>
+    </a>
+  </th:block>
+</li>
+</body>
+</html>

@@ -1,0 +1,22 @@
+/* 그래프 뷰 스타일 */
+.graph-container {
+  background-color: var(--gray-100);
+  border-radius: 10px;
+  padding: 20px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph-placeholder {
+  color: var(--gray-500);
+  text-align: center;
+}
+
+.graph-placeholder i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: var(--gray-400);
+}

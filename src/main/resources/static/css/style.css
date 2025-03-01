@@ -1,4 +1,9 @@
-/* css reset */
+/* 메인 CSS */
+
+/* Pretendard 폰트 불러오기 */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css'); /* css reset */
+
+/* CSS Reset */
 * {
   margin: 0;
   padding: 0;
@@ -16,10 +21,7 @@ a {
   text-decoration: none;
 }
 
-/* Pretendard 폰트 불러오기 */
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
-/* 색상 변수 정의 */
+/* 색상 정의 */
 :root {
   /* 그레이 스케일 */
   --gray-50: #F8FAFC;
@@ -33,13 +35,13 @@ a {
   --gray-800: #1E293B;
   --gray-900: #0F172A;
 
-  /* 브랜드 색상 */
+  /* Primary 색상 */
   --primary: #EE5F6A;
   --primary-dark: #E14E58;
 
   /* 기본 색상 */
   --white: #FFFFFF;
-  --black: #000000;
+  --black: #1D1D1D;
 }
 
 /* 글로벌 스타일 */
