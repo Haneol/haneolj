@@ -14,6 +14,7 @@ import org.commonmark.renderer.html.AttributeProvider;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -70,8 +71,9 @@ public class MarkdownService {
 
 
     // 마크다운 파일 읽기
+    @Cacheable(value = "markdownHtmlCache", key = "#filePath.toString()")
     public String readMarkdownFile(Path filePath) throws IOException {
-        log.info("마크다운 파일 읽기: {}", filePath);
+        log.info("마크다운 파일 읽기 (캐시 미스): {}", filePath);
         if (!Files.exists(filePath)) {
             throw new IOException("파일이 존재하지 않습니다: " + filePath);
         }
@@ -80,8 +82,11 @@ public class MarkdownService {
     }
 
     // 마크다운 파일을 HTML 파일로 변경
+    @Cacheable(value = "markdownHtmlCache", key = "'html-' + #markdown.hashCode()")
     public String convertToHtml(String markdown) {
         try {
+            log.info("마크다운 HTML 변환 (캐시 미스)");
+
             // CommonMark로 HTML 변환 전에 Obsidian 링크 처리
             markdown = processObsidianLinks(markdown);
             markdown = processMarkdownLinks(markdown);
