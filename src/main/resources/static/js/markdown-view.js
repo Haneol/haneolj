@@ -1,4 +1,53 @@
 document.addEventListener('DOMContentLoaded', function() {
+  const tocToggleBtn = document.getElementById('toc-toggle-btn');
+  const tocCloseBtn = document.getElementById('toc-close-btn');
+  const mobileToc = document.getElementById('mobile-toc');
+
+  // 목차 항목에 인덱스 추가 (순차적 애니메이션을 위함)
+  const tocItems = document.querySelectorAll('.mobile-toc-body ul.category-tree > li');
+  tocItems.forEach((item, index) => {
+    item.style.setProperty('--item-index', index);
+  });
+
+  // 목차 버튼 클릭 시 팝업 표시
+  tocToggleBtn.addEventListener('click', function() {
+    mobileToc.classList.add('show');
+    document.body.classList.add('toc-open');
+
+    // 포커스를 팝업 내부로 이동 (접근성)
+    setTimeout(() => {
+      tocCloseBtn.focus();
+    }, 100);
+  });
+
+  // 닫기 버튼 클릭 시 팝업 닫기
+  tocCloseBtn.addEventListener('click', function() {
+    closeMobileToc();
+  });
+
+  // 팝업 바깥 클릭 시 닫기
+  mobileToc.addEventListener('click', function(e) {
+    if (e.target === mobileToc) {
+      closeMobileToc();
+    }
+  });
+
+  // ESC 키 누를 때 팝업 닫기 (접근성)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mobileToc.classList.contains('show')) {
+      closeMobileToc();
+    }
+  });
+
+  function closeMobileToc() {
+    mobileToc.classList.remove('show');
+    document.body.classList.remove('toc-open');
+    // 포커스를 원래 버튼으로 돌려놓기 (접근성)
+    setTimeout(() => {
+      tocToggleBtn.focus();
+    }, 100);
+  }
+
   // 코드 블록에 하이라이트 적용
   document.querySelectorAll('pre code').forEach((block) => {
     hljs.highlightElement(block);
