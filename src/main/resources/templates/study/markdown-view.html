@@ -8,9 +8,34 @@
 <body>
 <div th:fragment="content">
   <div class="container">
+    <!-- 모바일 목차 버튼 (md 크기 미만에서만 표시) -->
+    <div class="d-md-none mb-3">
+      <button id="toc-toggle-btn" class="list-button">
+        <i class="fas fa-list"></i> 목차 보기
+      </button>
+    </div>
+
+    <!-- 모바일 목차 팝업 (처음에는 숨겨져 있음) -->
+    <div id="mobile-toc" class="mobile-toc d-md-none">
+      <div class="mobile-toc-container">
+        <div class="mobile-toc-header">
+          <button id="toc-close-btn" class="btn-close"></button>
+          <h5>목차</h5>
+        </div>
+        <div class="mobile-toc-body">
+          <!-- 카테고리 트리 (사이드바와 동일한 내용) -->
+          <div th:if="${studyRoot != null}">
+            <ul class="category-tree">
+              <li th:replace="~{fragments/category-node :: render-node(${studyRoot}, 0)}"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <!-- 사이드바 (카테고리 트리) -->
-      <div class="col-md-3">
+      <div class="col-md-3 d-none d-md-block">
         <div class="sidebar sticky-top" style="top: 20px;">
           <h5 class="mb-3">목차</h5>
 

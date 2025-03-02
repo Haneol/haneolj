@@ -119,8 +119,8 @@ body {
 /* 반응형 조정 */
 @media (max-width: 768px) {
   .container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }
 
@@ -134,19 +134,20 @@ body {
 
 @media (min-width: 576px) {
   .home {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
 .container .home {
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 /* 프로필 카드 */
 .profile-card {
   display: flex;
+  flex-direction: row;
   justify-content: start;
   align-items: center;
   height: 128px;
@@ -295,22 +296,37 @@ body {
 .update-info {
   color: var(--gray-500);
   font-size: 14px;
+  display: flex;
+  position: relative;
+  top: 50%;
+  transform: translateY(calc(-50% - 3px));
 }
 
 /* 반응형 스타일 */
 @media (max-width: 768px) {
   .post-menu-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    height: 72px;
     gap: 10px;
+    margin-top: 20px;
   }
 
   .post-menu-tabs {
+    justify-content: center;
     width: 100%;
+  }
+
+  .tab-link {
+    font-size: 14px;
   }
 
   .update-info {
     align-self: flex-end;
+  }
+
+  .tab-indicator {
+    bottom: -7px;
   }
 }
 

@@ -377,6 +377,14 @@
   color: #0EA5E9;
 }
 
+.markdown-content .callout-tldr {
+  border-left-color: #0EA5E9;
+}
+
+.markdown-content .callout-tldr .callout-title-icon {
+  color: #0EA5E9;
+}
+
 .markdown-content .callout-tip {
   border-left-color: #10B981;
 }
@@ -401,6 +409,62 @@
   color: #EF4444;
 }
 
+.markdown-content .callout-important {
+  border-left-color: #1e7b97;
+}
+
+.markdown-content .callout-important .callout-title-icon {
+  color: #1e7b97;
+}
+
+.markdown-content .callout-caution {
+  border-left-color: #EFB044;
+}
+
+.markdown-content .callout-caution .callout-title-icon {
+  color: #EFB044;
+}
+
+.markdown-content .callout-todo {
+  border-left-color: #0EA5E9;
+}
+
+.markdown-content .callout-todo .callout-title-icon {
+  color: #0EA5E9;
+}
+
+.markdown-content .callout-success {
+  border-left-color: #10B981;
+}
+
+.markdown-content .callout-success .callout-title-icon {
+  color: #10B981;
+}
+
+.markdown-content .callout-cite {
+  border-left-color: #102C37;
+}
+
+.markdown-content .callout-cite .callout-title-icon {
+  color: #102C37;
+}
+
+.markdown-content .callout-question {
+  border-left-color: #EFB044;
+}
+
+.markdown-content .callout-question .callout-title-icon {
+  color: #EFB044;
+}
+
+.markdown-content .callout-fail {
+  border-left-color: #EF4444;
+}
+
+.markdown-content .callout-fail .callout-title-icon {
+  color: #EF4444;
+}
+
 /* 사이드바 스타일 */
 .sidebar {
   background-color: var(--gray-50);
@@ -412,6 +476,13 @@
   padding: 2rem;
   border-radius: 20px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .study-content {
+    background-color: white;
+    padding: 1rem;
+  }
 }
 
 .study-header {
@@ -430,4 +501,77 @@
 .study-meta {
   color: var(--gray-500);
   font-size: 0.9rem;
+}
+
+/* 모바일 목차 팝업 스타일 */
+.mobile-toc {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 1050;
+  visibility: hidden;
+  transition: background-color 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-toc.show {
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mobile-toc-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 80%;
+  padding: 1.5rem;
+  max-width: 300px;
+  background-color: var(--white);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+}
+
+.mobile-toc.show .mobile-toc-container {
+  transform: translateX(0);
+}
+
+/* 목차 내부 항목 애니메이션 */
+.mobile-toc-body ul.category-tree > li {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition-delay: calc(0.05s * var(--item-index, 0));
+}
+
+.mobile-toc.show .mobile-toc-body ul.category-tree > li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.btn-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.list-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary);
+  background-color: transparent;
+  border: 2px solid var(--primary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }

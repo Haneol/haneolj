@@ -10,7 +10,7 @@
         <button type="button" class="tab-link" id="graph-tab" data-view="graph">
           <img th:src="@{/images/graph-view-enable.svg}" alt="" class="icon icon-active">
           <img th:src="@{/images/graph-view-disable.svg}" alt="" class="icon icon-inactive">
-          <span>그래프로 보기</span>
+          <span>그래프<span class="d-none d-sm-inline">로 보기</span></span>
           <div class="tab-indicator"></div>
         </button>
       </li>
@@ -18,13 +18,13 @@
         <button type="button" class="tab-link active" id="category-tab" data-view="category">
           <img th:src="@{/images/category-view-enable.svg}" alt="" class="icon icon-active">
           <img th:src="@{/images/category-view-disable.svg}" alt="" class="icon icon-inactive">
-          <span>카테고리로 보기</span>
+          <span>카테고리<span class="d-none d-sm-inline">로 보기</span></span>
           <div class="tab-indicator"></div>
         </button>
       </li>
     </ul>
     <div class="update-info">
-      <p>updated at <span th:text="${updateDate}">2025.01.04</span></p>
+      <p class="d-none d-md-block">updated at <span th:text="${updateDate}">2025.01.04</span></p>
     </div>
   </div>
 

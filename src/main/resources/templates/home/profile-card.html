@@ -2,15 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
   <!-- 프로필 카드 -->
-  <div th:fragment="profile-card" class="profile-card">
-    <div class="profile-image">
-      <img th:src="@{/images/profile.jpg}" alt="프로필 이미지" width="128" height="128" class="rounded-5">
+  <div th:fragment="profile-card">
+    <div class="profile-card">
+      <div class="profile-image">
+        <img th:src="@{/images/profile.jpg}" alt="프로필 이미지" width="128" height="128" class="rounded-5">
+      </div>
+      <div class="profile-info">
+        <h2 class="profile-name">정한얼(haneolj)</h2>
+        <p class="profile-job-title">Backend Developer</p>
+        <p class="profile-description d-none d-md-block"><a href="https://obsidian.md/" class="link-text">Obsidian</a>으로 꾸준히 공부한 내용을 기록 중이며, <a href="https://github.com/Haneol" class="link-text">Github</a>에 올려 관리 중입니다.<br/>아래 내용은, 그 중에서도 CS 공부에 대한 기록입니다.</p>
+      </div>
     </div>
-    <div class="profile-info">
-      <h2 class="profile-name">정한얼(haneolj)</h2>
-      <p class="profile-job-title">Backend Developer</p>
-      <p class="profile-description"><a href="https://obsidian.md/" class="link-text">Obsidian</a>으로 꾸준히 공부한 내용을 기록 중이며, <a href="https://github.com/Haneol" class="link-text">Github</a>에 올려 관리 중입니다.<br/>아래 내용은, 그 중에서도 CS 공부에 대한 기록입니다.</p>
-    </div>
+    <p class="profile-description d-block d-md-none mt-3"><a href="https://obsidian.md/" class="link-text">Obsidian</a>으로 꾸준히 공부한 내용을 기록 중이며, <a href="https://github.com/Haneol" class="link-text">Github</a>에 올려 관리 중입니다.<br/>아래 내용은, 그 중에서도 CS 공부에 대한 기록입니다.</p>
   </div>
 </body>
 </html>
