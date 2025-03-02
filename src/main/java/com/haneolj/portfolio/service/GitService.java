@@ -54,10 +54,8 @@ public class GitService {
         try {
             if (isGitRepository(repoPath)) {
                 pullRepository(repoPath);
-                log.info("성공적으로 저장소의 최신 변경사항을 가져왔습니다");
             } else {
                 cloneRepository(repoPath);
-                log.info("성공적으로 저장소를 {}에 클론했습니다", repoPath);
             }
             return repoPath.toString();
         } catch (Exception e) {

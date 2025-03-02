@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping
@@ -28,8 +29,14 @@ public class HomeController {
     }
 
     @GetMapping("/refresh")
+    @ResponseBody
     public String refreshStudyStructure() {
-        studyService.refreshStudyStructure();
-        return "redirect:/";
+        try {
+            studyService.refreshStudyStructure();
+
+            return "redirect:/";
+        } catch (Exception e) {
+            return "새로고침 실패: " + e.getMessage();
+        }
     }
 }

@@ -18,8 +18,7 @@ public class CacheConfig {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager(
                 "markdownHtmlCache", "studyStructureCache", "fileContentCache");
         cacheManager.setCaffeine(Caffeine.newBuilder()
-                .maximumSize(1000)
-                .expireAfterWrite(12, TimeUnit.HOURS));
+                .maximumSize(1000));
         return cacheManager;
     }
 }

@@ -1,6 +1,7 @@
 package com.haneolj.portfolio.service;
 
 import com.haneolj.portfolio.dto.CategoryNodeDto;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,7 @@ import java.util.regex.Pattern;
 public class StudyService {
 
     private final GitService gitService;
+    private final MarkdownService markdownService;
 
     @Value("${obsidian.repo.study-path}")
     private String studyPath;
@@ -40,7 +42,7 @@ public class StudyService {
     @Cacheable(value = "studyStructureCache", unless = "#result == null")
     public CategoryNodeDto getStudyStructure() {
         // Refresh가 필요한지 체크
-        if (studyRoot == null || shouldRefresh()) {
+        if (studyRoot == null) {
             try {
                 refreshStudyStructure();
             } catch (Exception e) {
@@ -77,11 +79,14 @@ public class StudyService {
             }
 
             studyRoot = new CategoryNodeDto("Study", studyDirectoryPath.toString(), true);
-            processDirectory(studyRoot, studyDirectoryPath);
+            List<Path> allMarkdownFiles = new ArrayList<>();
+
+            processDirectory(studyRoot, studyDirectoryPath, allMarkdownFiles);
             lastUpdate = LocalDateTime.now();
 
-            // 디렉토리 구조 디버깅
-//            validateAndLogStructure(studyRoot, 0);
+            // 비동기적으로 모든 마크다운 파일을 사전 캐싱
+            log.info("총 {} 개의 마크다운 파일을 사전 캐싱합니다.", allMarkdownFiles.size());
+            CompletableFuture.runAsync(() -> precacheMarkdownFiles(allMarkdownFiles));
 
             log.info("스터디 구조 새로고침 완료");
         } catch (IOException e) {
@@ -116,11 +121,46 @@ public class StudyService {
         }
     }
 
+    // 모든 마크다운 파일 사전 캐싱
+    private void precacheMarkdownFiles(List<Path> markdownFiles) {
+        int total = markdownFiles.size();
+        int processed = 0;
+        int success = 0;
+        int failed = 0;
+
+        log.info("마크다운 파일 사전 캐싱 시작 (총 {} 파일)", total);
+
+        for (Path file : markdownFiles) {
+            try {
+                // 파일 내용 읽기
+                String markdownContent = markdownService.readMarkdownFile(file);
+
+                // HTML로 변환하여 캐싱
+                markdownService.convertToHtml(markdownContent);
+
+                success++;
+            } catch (Exception e) {
+                log.warn("파일 사전 캐싱 실패: {}, 오류: {}", file, e.getMessage());
+                failed++;
+            }
+
+            processed++;
+
+            // 진행 상태 로깅 (10% 단위)
+            if (processed % Math.max(1, total / 10) == 0 || processed == total) {
+                int percentage = (int) (((double) processed / total) * 100);
+                log.info("사전 캐싱 진행 중: {}% 완료 ({}/{}), 성공: {}, 실패: {}",
+                        percentage, processed, total, success, failed);
+            }
+        }
+
+        log.info("마크다운 파일 사전 캐싱 완료. 총 {} 파일 중 {} 성공, {} 실패",
+                total, success, failed);
+    }
+
     // 디렉토리 처리
     // 처리된 디렉토리는 디렉토리 구조에 추가
-    private void processDirectory(CategoryNodeDto parentNode, Path directoryPath) throws IOException {
-        log.debug("디렉토리 처리 중: {}", directoryPath);
-
+    private void processDirectory(CategoryNodeDto parentNode, Path directoryPath, List<Path> allMarkdownFiles) throws IOException {
         if (!Files.exists(directoryPath)) {
             log.warn("디렉토리가 존재하지 않습니다: {}", directoryPath);
             return;
@@ -145,8 +185,6 @@ public class StudyService {
                     })
                     .toList();
 
-            log.debug("디렉토리 '{}' 내 항목 수: {}", directoryPath.getFileName(), sortedEntries.size());
-
             for (Path entry : sortedEntries) {
                 String name = entry.getFileName().toString();
 
@@ -161,13 +199,14 @@ public class StudyService {
                 // 번호 제거 ("1. Study" -> "Study")
                 String displayName = name.replaceAll("^\\d+\\.\\s*", "");
 
-                log.debug("항목 처리: {} ({})", name, isDirectory ? "디렉토리" : "파일");
-
                 if (isDirectory) {
                     CategoryNodeDto childNode = new CategoryNodeDto(displayName, entry.toString(), true);
                     parentNode.addChild(childNode);
-                    processDirectory(childNode, entry);
+                    processDirectory(childNode, entry, allMarkdownFiles);
                 } else if (name.endsWith(".md")) {
+                    // 마크다운 파일을 목록에 추가
+                    allMarkdownFiles.add(entry);
+
                     // 표시용 확장자 제거
                     displayName = displayName.substring(0, displayName.length() - 3);
 
@@ -184,8 +223,6 @@ public class StudyService {
                         String content = Files.readString(entry);
                         List<String> links = extractLinks(content);
                         fileNode.setLinks(links);
-
-                        log.debug("마크다운 파일 처리: {}, 링크 수: {}", name, links.size());
                     } catch (IOException e) {
                         log.warn("파일 정보 읽기 오류: {}: {}", entry, e.getMessage());
                     }
@@ -216,12 +253,4 @@ public class StudyService {
         return links;
     }
 
-    // Refresh가 필요한지 아닌지 검사
-    private boolean shouldRefresh() {
-        if (lastUpdate == null) {
-            return true;
-        }
-        // 지난 업데이트로부터 1시간이 지났다면 Refresh
-        return lastUpdate.plusHours(1).isBefore(LocalDateTime.now());
-    }
 }
