@@ -377,6 +377,14 @@
   color: #0EA5E9;
 }
 
+.markdown-content .callout-tldr {
+  border-left-color: #0EA5E9;
+}
+
+.markdown-content .callout-tldr .callout-title-icon {
+  color: #0EA5E9;
+}
+
 .markdown-content .callout-tip {
   border-left-color: #10B981;
 }
@@ -398,6 +406,62 @@
 }
 
 .markdown-content .callout-danger .callout-title-icon {
+  color: #EF4444;
+}
+
+.markdown-content .callout-important {
+  border-left-color: #1e7b97;
+}
+
+.markdown-content .callout-important .callout-title-icon {
+  color: #1e7b97;
+}
+
+.markdown-content .callout-caution {
+  border-left-color: #EFB044;
+}
+
+.markdown-content .callout-caution .callout-title-icon {
+  color: #EFB044;
+}
+
+.markdown-content .callout-todo {
+  border-left-color: #0EA5E9;
+}
+
+.markdown-content .callout-todo .callout-title-icon {
+  color: #0EA5E9;
+}
+
+.markdown-content .callout-success {
+  border-left-color: #10B981;
+}
+
+.markdown-content .callout-success .callout-title-icon {
+  color: #10B981;
+}
+
+.markdown-content .callout-cite {
+  border-left-color: #102C37;
+}
+
+.markdown-content .callout-cite .callout-title-icon {
+  color: #102C37;
+}
+
+.markdown-content .callout-question {
+  border-left-color: #EFB044;
+}
+
+.markdown-content .callout-question .callout-title-icon {
+  color: #EFB044;
+}
+
+.markdown-content .callout-fail {
+  border-left-color: #EF4444;
+}
+
+.markdown-content .callout-fail .callout-title-icon {
   color: #EF4444;
 }
 
