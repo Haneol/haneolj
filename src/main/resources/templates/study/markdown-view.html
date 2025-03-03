@@ -58,9 +58,13 @@
           <div class="study-header">
             <h1 class="study-title" th:text="${contentTitle}">문서 제목</h1>
             <div class="study-meta">
-              <span>
-                <i class="far fa-calendar-alt"></i>
-                <span th:text="${contentLastModified}">2025.01.04</span>
+              <span class="me-3">
+                  <i class="fas fa-plus-circle"></i>
+                  작성일: <span th:text="${contentCreatedAt}">2025.01.04</span>
+              </span>
+                        <span>
+                  <i class="far fa-calendar-alt"></i>
+                  수정일: <span th:text="${contentLastModified}">2025.01.04</span>
               </span>
             </div>
           </div>

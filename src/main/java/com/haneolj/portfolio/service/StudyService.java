@@ -219,6 +219,9 @@ public class StudyService {
                                 ZoneId.systemDefault());
                         fileNode.setLastModified(lastModified);
 
+                        LocalDateTime createdAt = gitService.getFileCreationDate(entry);
+                        fileNode.setCreatedAt(createdAt);
+
                         // 마크다운 파일 파싱하여 링크 추출
                         String content = Files.readString(entry);
                         List<String> links = extractLinks(content);

@@ -69,6 +69,7 @@ public class MarkdownController {
         model.addAttribute("contentTitle", title);
         model.addAttribute("contentBody", htmlContent);
         model.addAttribute("contentLastModified", markdownService.getLastModifiedDate(path));
+        model.addAttribute("contentCreatedAt", markdownService.getFileCreationDate(path));
         model.addAttribute("studyRoot", studyService.getStudyStructure());
         model.addAttribute("currentFilePath", filePath);
 
