@@ -38,7 +38,9 @@
     <!-- @Bean을 활용한 helper 클래스 사용 -->
     <a th:href="@{'/study/view/' + ${@stringUtils.encodeBase64Url(node.path)}}" class="category-file">
       <span th:text="${node.name}">파일 이름</span>
-      <span class="category-modified-date" th:text="${node.lastModifiedFormatted}">2025.01.04</span>
+      <span class="category-modified-date">
+        <span title="작성일" th:text="${node.createdAtFormatted}">2025.01.04</span>
+      </span>
     </a>
   </th:block>
 </li>

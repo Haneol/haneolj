@@ -242,6 +242,16 @@ public class MarkdownService {
         }
     }
 
+    public String getFileCreationDate(Path filePath) {
+        try {
+            LocalDateTime createdAt = gitService.getFileCreationDate(filePath);
+            return createdAt.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        } catch (Exception e) {
+            log.warn("파일 생성 시간을 가져올 수 없습니다: {}", e.getMessage());
+            return "Unknown";
+        }
+    }
+
     // 체크박스, Callout 등 스타일링
     static class CustomAttributeProvider implements AttributeProvider {
         @Override

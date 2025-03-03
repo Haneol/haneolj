@@ -16,6 +16,8 @@ public class CategoryNodeDto {
     @Setter
     private List<String> links = new ArrayList<>();
     @Setter
+    private LocalDateTime createdAt;
+    @Setter
     private LocalDateTime lastModified;
 
     public CategoryNodeDto(String name, String path, boolean directory) {
@@ -33,5 +35,12 @@ public class CategoryNodeDto {
             return "";
         }
         return lastModified.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+    }
+
+    public String getCreatedAtFormatted() {
+        if (createdAt == null) {
+            return "";
+        }
+        return createdAt.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 }

@@ -503,6 +503,15 @@
   font-size: 0.9rem;
 }
 
+.study-meta span {
+  margin-right: 15px;
+  color: var(--gray-500);
+}
+
+.study-meta i {
+  margin-right: 5px;
+}
+
 /* 모바일 목차 팝업 스타일 */
 .mobile-toc {
   position: fixed;
