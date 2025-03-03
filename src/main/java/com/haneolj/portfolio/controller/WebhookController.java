@@ -3,6 +3,9 @@ package com.haneolj.portfolio.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haneolj.portfolio.service.StudyService;
+import com.haneolj.portfolio.service.WebhookService;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class WebhookController {
 
+    private final WebhookService webhookService;
     private final StudyService studyService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -59,10 +63,19 @@ public class WebhookController {
             return ResponseEntity.ok("Branch ignored");
         }
 
+        // 변경된 파일 목록 추출
+        List<String> changedFiles = webhookService.extractChangedFilesFromPayload(payload);
+        log.info("변경된 파일 목록: {}", changedFiles);
+
         // 스터디 구조 새로고침
-        log.info("GitHub 웹훅 수신: {} 브랜치에 Push 이벤트 발생, 스터디 구조 새로고침 시작", targetBranch);
-        studyService.refreshStudyStructure();
-        log.info("스터디 구조 새로고침 완료");
+        if (!changedFiles.isEmpty()) {
+            // 변경된 파일이 있다면 선택적 처리
+            webhookService.processChangedFiles(changedFiles);
+        } else {
+            // 변경된 파일 정보가 없는 경우 전체 새로고침 (기존 방식)
+            log.info("변경된 파일 정보 없음, 전체 새로고침 시작");
+            studyService.refreshStudyStructure();
+        }
 
         return ResponseEntity.ok("Successfully processed");
     }
