@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const tocCloseBtn = document.getElementById('toc-close-btn');
   const mobileToc = document.getElementById('mobile-toc');
 
+  // MathJax가 로드되었는지 확인하고 재처리
+  if (window.MathJax) {
+    window.MathJax.typeset();
+  }
+
   // 목차 항목에 인덱스 추가 (순차적 애니메이션을 위함)
   const tocItems = document.querySelectorAll('.mobile-toc-body ul.category-tree > li');
   tocItems.forEach((item, index) => {

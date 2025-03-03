@@ -38,6 +38,7 @@ public class MarkdownService {
     private final HtmlRenderer renderer;
     private final StringUtils stringUtils;
     private final GitService gitService;
+    private final TexService texService;
 
     @Value("${obsidian.repo.study-path}")
     private String studyPath;
@@ -49,9 +50,10 @@ public class MarkdownService {
     private static final Pattern MARKDOWN_LINK_PATTERN = Pattern.compile("\\[([^]]+)]\\(([^)]+\\.md)\\)");
 
     @Autowired
-    public MarkdownService(GitService gitService, StringUtils stringUtils) {
+    public MarkdownService(GitService gitService, StringUtils stringUtils, TexService texService) {
         this.stringUtils = stringUtils;
         this.gitService = gitService;
+        this.texService = texService;
 
         // 확장 기능 추가 (테이블, 체크박스 등)
         List<Extension> extensions = Arrays.asList(
@@ -84,13 +86,21 @@ public class MarkdownService {
     @Cacheable(value = "markdownHtmlCache", key = "'html-' + #markdown.hashCode()")
     public String convertToHtml(String markdown) {
         try {
+            // TeX 표현식 임시 보호
+            markdown = texService.protectTexExpressions(markdown);
+
             // CommonMark로 HTML 변환 전에 Obsidian 링크 처리
             markdown = processObsidianLinks(markdown);
             markdown = processMarkdownLinks(markdown);
 
             // CommonMark를 사용하여 HTML로 변환
             Node document = parser.parse(markdown);
-            return renderer.render(document);
+            String html = renderer.render(document);
+
+            // TeX 표현식 복원
+            html = texService.restoreTexExpressions(html);
+
+            return html;
         } catch (Exception e) {
             log.error("마크다운을 HTML로 변환 중 오류 발생: {}", e.getMessage(), e);
             return "<div class='alert alert-danger'>마크다운 변환 중 오류가 발생했습니다: " + e.getMessage() + "</div>"
@@ -229,40 +239,6 @@ public class MarkdownService {
         } catch (IOException e) {
             log.warn("파일 수정 시간을 가져올 수 없습니다: {}", e.getMessage());
             return "Unknown";
-        }
-    }
-
-    // 특정 파일 내 헤더 or 블록 참조 콘텐츠 가져오기
-    public String getReferencedContent(Path filePath, String reference, String type) {
-        try {
-            String content = readMarkdownFile(filePath);
-
-            if ("header".equals(type)) {
-                // 헤더 콘텐츠 찾기
-                Pattern headerPattern = Pattern.compile("^#{1,6}\\s+" + Pattern.quote(reference) + "\\s*$(.*?)(?=^#{1,6}\\s+|\\Z)",
-                        Pattern.MULTILINE | Pattern.DOTALL);
-                Matcher matcher = headerPattern.matcher(content);
-
-                if (matcher.find()) {
-                    String headerContent = matcher.group(1).trim();
-                    return convertToHtml(headerContent);
-                }
-            } else if ("block".equals(type)) {
-                // 블록 참조 콘텐츠 찾기
-                Pattern blockPattern = Pattern.compile("\\^" + Pattern.quote(reference) + "\\s*(.+?)(?=\\^|$)",
-                        Pattern.MULTILINE | Pattern.DOTALL);
-                Matcher matcher = blockPattern.matcher(content);
-
-                if (matcher.find()) {
-                    String blockContent = matcher.group(1).trim();
-                    return convertToHtml(blockContent);
-                }
-            }
-
-            return "<em>참조된 콘텐츠를 찾을 수 없습니다.</em>";
-        } catch (IOException e) {
-            log.warn("참조된 콘텐츠를 가져올 수 없습니다: {}", e.getMessage());
-            return "<em>오류: " + e.getMessage() + "</em>";
         }
     }
 
