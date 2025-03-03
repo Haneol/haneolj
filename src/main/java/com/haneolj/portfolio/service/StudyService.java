@@ -256,4 +256,87 @@ public class StudyService {
         return links;
     }
 
+    // 특정 파일 노드 업데이트
+    public void updateFileNode(Path filePath) {
+        try {
+            if (!Files.exists(filePath)) {
+                log.warn("파일이 존재하지 않음: {}", filePath);
+                return;
+            }
+
+            String normalizedPath = filePath.toString().replace('\\', '/');
+            updateNodeRecursively(studyRoot, normalizedPath);
+        } catch (Exception e) {
+            log.error("노드 업데이트 중 오류 발생: {}", filePath, e);
+        }
+    }
+
+    // 파일 노드를 구조에서 제거
+    public void removeFileNode(String filePath) {
+        try {
+            String normalizedPath = filePath.replace('\\', '/');
+            removeNodeRecursively(studyRoot, normalizedPath);
+        } catch (Exception e) {
+            log.error("노드 제거 중 오류 발생: {}", filePath, e);
+        }
+    }
+
+    // 재귀적으로 파일 노드 찾아 업데이트
+    private boolean updateNodeRecursively(CategoryNodeDto node, String targetPath) throws IOException {
+        // 자신이 대상 파일인 경우
+        if (!node.isDirectory() && node.getPath().replace('\\', '/').equals(targetPath)) {
+            // 파일 노드 정보 업데이트
+            Path path = Paths.get(node.getPath());
+
+            // 수정 시간 업데이트
+            LocalDateTime lastModified = LocalDateTime.ofInstant(
+                    Files.getLastModifiedTime(path).toInstant(),
+                    ZoneId.systemDefault());
+            node.setLastModified(lastModified);
+
+            // 링크 정보 다시 추출
+            String content = Files.readString(path);
+            List<String> links = extractLinks(content);
+            node.setLinks(links);
+
+            log.info("파일 노드 업데이트: {}", targetPath);
+            return true;
+        }
+
+        // 디렉토리인 경우 자식들 확인
+        if (node.isDirectory()) {
+            for (CategoryNodeDto child : node.getChildren()) {
+                if (updateNodeRecursively(child, targetPath)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // 재귀적으로 노드 찾아 제거
+    private boolean removeNodeRecursively(CategoryNodeDto parent, String targetPath) {
+        if (parent.isDirectory()) {
+            List<CategoryNodeDto> children = parent.getChildren();
+            for (int i = 0; i < children.size(); i++) {
+                CategoryNodeDto child = children.get(i);
+
+                // 자식이 대상 파일인 경우
+                if (!child.isDirectory() && child.getPath().replace('\\', '/').equals(targetPath)) {
+                    children.remove(i);
+                    log.info("파일 노드 제거: {}", targetPath);
+                    return true;
+                }
+
+                // 자식이 디렉토리인 경우 재귀 호출
+                if (child.isDirectory() && removeNodeRecursively(child, targetPath)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 }
