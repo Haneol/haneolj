@@ -178,6 +178,11 @@ body {
 .link-text {
   color: var(--primary) !important;
   font-weight: 700;
+  text-decoration: underline;
+  /* 추가 스타일링 옵션 */
+  text-decoration-thickness: 2px; /* 밑줄 두께 */
+  text-decoration-color: var(--primary); /* 밑줄 색상 */
+  text-decoration-style: dotted; /* solid, dashed, dotted, wavy 등 */
 }
 
 .link-text:hover {
