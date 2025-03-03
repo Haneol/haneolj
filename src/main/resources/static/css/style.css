@@ -39,7 +39,7 @@ a {
 
   /* Primary 색상 */
   --primary: #EE5F6A;
-  --primary-dark: #E14E58;
+  --primary-dark: #C43030;
 
   /* 기본 색상 */
   --white: #FFFFFF;
@@ -179,14 +179,14 @@ body {
   color: var(--primary) !important;
   font-weight: 700;
   text-decoration: underline;
-  /* 추가 스타일링 옵션 */
-  text-decoration-thickness: 2px; /* 밑줄 두께 */
-  text-decoration-color: var(--primary); /* 밑줄 색상 */
-  text-decoration-style: dotted; /* solid, dashed, dotted, wavy 등 */
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--primary);
+  text-decoration-style: dotted;
 }
 
 .link-text:hover {
   color: var(--primary-dark) !important;
+  text-decoration-color: var(--primary-dark);
 }
 
 /* 모바일 화면에서는 br 태그 숨기기 */
