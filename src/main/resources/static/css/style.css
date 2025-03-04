@@ -156,6 +156,7 @@ body {
 .profile-info {
   margin-left: 20px;
   height: 128px;
+  width: 100%;
 }
 
 .profile-name {
@@ -187,6 +188,68 @@ body {
 .link-text:hover {
   color: var(--primary-dark) !important;
   text-decoration-color: var(--primary-dark);
+}
+
+/* 그라데이션 애니메이션 버튼 스타일 */
+.btn-gradient-animated {
+  position: relative;
+  display: inline-flex;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(-45deg, #f15697, #ff8133,var(--primary), #ffb133);
+  background-size: 400% 400%;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(238, 95, 106, 0.3);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  animation: gradientFlow 8s ease-in-out infinite;
+}
+
+.btn-gradient-animated:hover {
+  box-shadow: 0 6px 15px rgba(238, 95, 106, 0.4);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.btn-gradient-animated:active {
+  transform: translateY(0);
+}
+
+.btn-gradient-animated i {
+  font-size: 14px;
+}
+
+/* 그라데이션 애니메이션 */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 모바일 화면에서는 더 작게 표시 */
+@media (max-width: 768px) {
+  .btn-gradient-animated {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .btn-gradient-animated i {
+    font-size: 16px;
+  }
 }
 
 /* 모바일 화면에서는 br 태그 숨기기 */

@@ -24,7 +24,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
-                        .requestMatchers("/", "/study/view/**", "/refresh").permitAll()
+                        .requestMatchers("/", "/study/view/**", "/refresh", "/about/**").permitAll()
                         .requestMatchers("/api/webhook/**").permitAll()
                         .requestMatchers("/api/study/graph").permitAll()
                         .anyRequest().authenticated()
@@ -50,7 +50,7 @@ public class SecurityConfig {
                                         "script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; " +
                                         "style-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; " +
                                         "font-src 'self' https://cdnjs.cloudflare.com data:; " +  // 폰트 소스 추가
-                                        "img-src 'self' data:; " +
+                                        "img-src 'self' https://img.shields.io data:; " +
                                         "connect-src 'self'; " +
                                         "frame-ancestors 'none';"))
                 );
