@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
                         .requestMatchers("/", "/study/view/**", "/refresh").permitAll()
                         .requestMatchers("/api/webhook/**").permitAll()
+                        .requestMatchers("/api/study/graph").permitAll()
                         .anyRequest().authenticated()
                 )
                 // HTTP 기본 인증 비활성화

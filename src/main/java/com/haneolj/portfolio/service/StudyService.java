@@ -95,6 +95,11 @@ public class StudyService {
         }
     }
 
+    // 특정 파일의 캐시만 제거
+    @CacheEvict(value = {"markdownHtmlCache", "fileContentCache"}, key = "#filePath")
+    public void refreshFileCache(String filePath) {
+        log.debug("파일 캐시 제거: {}", filePath);
+    }
 
     // 디렉토리 구조 검증 및 디버깅
     private void validateAndLogStructure(CategoryNodeDto node, int depth) {

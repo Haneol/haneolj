@@ -211,7 +211,7 @@ function processCallouts() {
     const text = firstParagraph.textContent.trim();
 
     // 콜아웃 형식 확인 (예: [!NOTE] 또는 [!WARNING])
-    const calloutMatch = text.match(/^\[!(NOTE|INFO|TIP|TLDR|WARNING|DANGER|IMPORTANT|CAUTION|QUESTION|CITE|TODO|FAIL|SUCCESS)]\s*(.*)/i);
+    const calloutMatch = text.match(/^\[!(NOTE|INFO|TIP|TLDR|WARNING|DANGER|IMPORTANT|CAUTION|QUESTION|CITE|TODO|FAIL|SUCCESS|HINT)]\s*(.*)/i);
 
     if (calloutMatch) {
       // 콜아웃 타입과 제목
@@ -266,6 +266,10 @@ function processCallouts() {
           iconClass = 'fas fa-circle-xmark';
           titleText = '실패';
           break;
+        case 'hint':
+          iconClass = 'fas fa-fire';
+          titleText = '힌트';
+          break;
         default:
           iconClass = 'fas fa-info-circle';
           titleText = '참고';
@@ -281,7 +285,7 @@ function processCallouts() {
       contentElement.className = 'callout-content';
 
       // 첫 번째 단락의 콜아웃 마커 제거
-      firstParagraph.innerHTML = firstParagraph.innerHTML.replace(/^\[!(NOTE|INFO|TIP|TLDR|WARNING|DANGER|IMPORTANT|CAUTION|QUESTION|CITE|TODO|FAIL|SUCCESS)]\s*(.*)/i, '$2');
+      firstParagraph.innerHTML = firstParagraph.innerHTML.replace(/^\[!(NOTE|INFO|TIP|TLDR|WARNING|DANGER|IMPORTANT|CAUTION|QUESTION|CITE|TODO|FAIL|SUCCESS|HINT)]\s*(.*)/i, '$2');
 
       // 내용이 비어있으면 제거하지 않음
       if (firstParagraph.textContent.trim() === '') {

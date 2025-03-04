@@ -1,22 +1,79 @@
 /* 그래프 뷰 스타일 */
 .graph-container {
-  background-color: var(--gray-100);
-  border-radius: 10px;
+  border-radius: 30px;
+  border: 1px #E2E8F0 solid;
   padding: 20px;
-  min-height: 400px;
+  min-height: 500px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  transition: height 0.3s ease;
 }
 
 .graph-placeholder {
-  color: var(--gray-500);
   text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: opacity 0.5s ease;
 }
 
 .graph-placeholder i {
   font-size: 48px;
   margin-bottom: 16px;
   color: var(--gray-400);
+}
+
+.graph-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* 그래프 노드 스타일 */
+.nodes circle {
+  transition: r 0.3s ease, fill 0.3s ease, opacity 0.3s ease;
+  stroke: transparent;
+  stroke-width: 0;
+}
+
+/* 그래프 링크 스타일 */
+.links line {
+  transition: stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease;
+}
+
+/* 로딩 스피너 */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 20px;
+  border: 4px solid var(--gray-200);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 그래프 툴팁 스타일 */
+.graph-tooltip {
+  background-color: white;
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--gray-800);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

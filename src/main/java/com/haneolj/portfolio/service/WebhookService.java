@@ -23,14 +23,12 @@ public class WebhookService {
     private final ObjectMapper objectMapper;
     private final GitService gitService;
     private final StudyService studyService;
-    private final CacheService cacheService;
+    private final GraphService graphService;
 
     @Value("${obsidian.repo.study-path}")
     private String studyPath;
 
-    /**
-     * GitHub 웹훅 페이로드에서 변경된 파일 목록을 추출합니다.
-     */
+    // GitHub 웹훅 페이로드에서 변경된 파일 목록 추출
     public List<String> extractChangedFilesFromPayload(byte[] payload) {
         Set<String> changedFiles = new HashSet<>();
         try {
@@ -64,9 +62,7 @@ public class WebhookService {
         }
     }
 
-    /**
-     * 변경된 파일 목록을 기반으로 필요한 캐시만 갱신합니다.
-     */
+    // 변경된 파일 목록을 기반으로 필요한 캐시만 갱신
     public void processChangedFiles(List<String> changedFiles) {
         log.info("변경된 파일 처리 시작 (총 {}개)", changedFiles.size());
 
@@ -88,13 +84,16 @@ public class WebhookService {
             // 구조 변경이 있으면 전체 새로고침
             log.info("디렉토리 구조 변경 감지, 전체 새로고침 수행");
             studyService.refreshStudyStructure();
+
+            // 그래프 데이터도 갱신
+            graphService.refreshGraphData();
         } else {
             // 개별 파일만 새로고침
             log.info("개별 파일만 새로고침 ({}개)", studyFiles.size());
 
             // 각 파일에 대해 캐시 제거
             for (Path filePath : studyFiles) {
-                cacheService.evictFileCache(filePath.toString());
+                studyService.refreshFileCache(filePath.toString());
 
                 // 파일이 존재하면 노드 업데이트, 없으면 노드 제거
                 if (Files.exists(filePath)) {
@@ -102,6 +101,15 @@ public class WebhookService {
                 } else {
                     studyService.removeFileNode(filePath.toString());
                 }
+            }
+
+            // 마크다운 파일 변경 시 그래프 데이터도 갱신
+            boolean hasMdChanges = studyFiles.stream()
+                    .anyMatch(path -> path.toString().endsWith(".md"));
+
+            if (hasMdChanges) {
+                log.info("마크다운 파일 변경 감지, 그래프 데이터 갱신");
+                graphService.refreshGraphData();
             }
         }
 
