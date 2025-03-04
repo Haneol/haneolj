@@ -37,4 +37,10 @@ public class HomeController {
             return "새로고침 실패: " + e.getMessage();
         }
     }
+
+    @GetMapping("/about/this")
+    public String aboutProject(Model model) {
+        model.addAttribute("version", appVersion);
+        return "about/this";
+    }
 }

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/default :: layout(~{::title}, ~{::content})}">
+<head>
+  <title>홈페이지 소개 - haneolj.com</title>
+</head>
+<body>
+<div th:fragment="content">
+  <div class="about-this">
+    <div class="about-content">
+      <div class="p-4">
+        <h2 class="mb-4 text-primary fw-bold">🤔 이 홈페이지는 어떻게 만들어졌나요?</h2>
+
+        <div class="mb-5 callout-block">
+          <h3 class="h4 callout-title">📌 개요</h3>
+          <p>
+            이 웹사이트는 로컬 <span><a href="https://obsidian.md/" class="link-text">Obsidian</a></span>에서 작성한 마크다운 노트를 자동으로 웹사이트로 변환하여 보여주는 프로젝트입니다.
+            GitHub 저장소(private)와 연동하여 특정 브랜치의 마크다운 파일이 업데이트될 때마다 웹사이트의 내용도 자동으로 업데이트됩니다.
+          </p>
+        </div>
+
+        <div class="mb-5">
+          <h2 class="h4 fw-semibold">✨ 주요 기능</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-3 border-0 bg-light">
+                <div class="card-body">
+                  <h3 class="h5 card-title fw-semibold text-primary"><i class="fas fa-sync-alt me-2"></i>자동 동기화</h3>
+                  <p class="card-text">GitHub 웹훅을 통해 마크다운 파일이 업데이트되면 웹사이트 콘텐츠도 자동으로 업데이트됩니다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-3 border-0 bg-light">
+                <div class="card-body">
+                  <h3 class="h5 card-title fw-semibold text-primary"><i class="fas fa-project-diagram me-2"></i>그래프 뷰</h3>
+                  <p class="card-text">마크다운 파일 간의 링크를 분석하여 그래프를 생성, 시각화합니다(옵시디언 그래프 뷰와 유사하게 구현).</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-3 border-0 bg-light">
+                <div class="card-body">
+                  <h3 class="h5 card-title fw-semibold text-primary"><i class="fas fa-list-alt me-2"></i>카테고리 뷰</h3>
+                  <p class="card-text">디렉토리 구조를 기반으로 문서를 카테고리별로 정리하여 보여줍니다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-3 border-0 bg-light">
+                <div class="card-body">
+                  <h3 class="h5 card-title fw-semibold text-primary"><i class="fas fa-mobile-alt me-2"></i>모바일 반응형</h3>
+                  <p class="card-text">어떠한 기기에서든 최적화된 사용자 경험을 제공하기 위해 반응형 레이아웃을 적용했습니다.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h2 class="h4 fw-semibold mb-4">💻 사용한 기술 스택</h2>
+
+          <div class="tech-stack-section">
+            <!-- 백엔드 기술 -->
+            <div class="stack-category mb-4">
+              <h5 class="category-title"><i class="fas fa-server me-2"></i>백엔드</h5>
+              <div class="shields-container mb-2">
+                <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white" alt="Spring">
+                <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" alt="Spring Boot">
+                <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
+                <img src="https://img.shields.io/badge/JGit-F05032?style=for-the-badge&logo=git&logoColor=white" alt="JGit">
+                <img src="https://img.shields.io/badge/Caffeine_Cache-8D6748?style=for-the-badge&logo=coffeescript&logoColor=white" alt="Caffeine Cache">
+              </div>
+            </div>
+
+            <!-- 프론트엔드 기술 -->
+            <div class="stack-category mb-4">
+              <h5 class="category-title"><i class="fas fa-desktop me-2"></i>프론트엔드</h5>
+              <div class="shields-container mb-2">
+                <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white" alt="Thymeleaf">
+                <img src="https://img.shields.io/badge/Bootstrap_5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
+                <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+                <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
+                <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
+              </div>
+            </div>
+
+            <!-- 데이터 처리 & 시각화 -->
+            <div class="stack-category mb-4">
+              <h5 class="category-title"><i class="fas fa-chart-bar me-2"></i>데이터 처리 & 시각화</h5>
+              <div class="shields-container mb-2">
+                <img src="https://img.shields.io/badge/Commonmark-000000?style=for-the-badge&logo=markdown&logoColor=white" alt="Commonmark">
+                <img src="https://img.shields.io/badge/D3.js-F9A03C?style=for-the-badge&logo=d3.js&logoColor=white" alt="D3.js">
+                <img src="https://img.shields.io/badge/MathJax-1F7A3F?style=for-the-badge&logo=mathjax&logoColor=white" alt="MathJax">
+                <img src="https://img.shields.io/badge/Highlight.js-333333?style=for-the-badge&logo=javascript&logoColor=white" alt="Highlight.js">
+              </div>
+            </div>
+
+            <!-- 도구 & 인프라 -->
+            <div class="stack-category mb-4">
+              <h5 class="category-title"><i class="fas fa-tools me-2"></i>도구 & 인프라</h5>
+              <div class="shields-container mb-2">
+                <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+                <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions">
+                <img src="https://img.shields.io/badge/Obsidian-483699?style=for-the-badge&logo=obsidian&logoColor=white" alt="Obsidian">
+                <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h2 class="h4 fw-semibold">🔄 워크플로우</h2>
+          <ol>
+            <li class="mb-2">로컬 Obsidian에서 마크다운 문서 작성 및 편집</li>
+            <li class="mb-2">GitHub 저장소에서, 배포 브랜치에 변경사항을 Merge하거나, 또는 직접 Push</li>
+            <li class="mb-2">GitHub 웹훅이 웹서버에 변경 알림 전송</li>
+            <li class="mb-2">웹서버가 최신 내용을 Pull하고 해당 부분 캐시 갱신</li>
+            <li class="mb-2">웹사이트에 변경사항이 자동으로 반영</li>
+          </ol>
+        </div>
+
+        <div class="text-center mt-5">
+          <a href="/" class="btn btn-outline-primary me-3">
+            <i class="fas fa-arrow-left me-2"></i>홈으로 돌아가기
+          </a>
+          <a href="https://github.com/Haneol/haneolj" target="_blank" class="btn btn-dark">
+            <i class="fab fa-github me-2"></i>GitHub 방문하기
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

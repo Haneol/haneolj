@@ -1,8 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // 그래프 시각화 즉시 초기화
-  initGraphVisualization();
-});
-
 function initGraphVisualization() {
   const graphContainer = document.getElementById('graph-container');
   if (!graphContainer) return;

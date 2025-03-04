@@ -8,8 +8,16 @@
         <img th:src="@{/images/profile.jpg}" alt="프로필 이미지" width="128" height="128" class="rounded-5">
       </div>
       <div class="profile-info">
-        <h2 class="profile-name">정한얼(haneolj)</h2>
-        <p class="profile-job-title">Backend Developer</p>
+        <div class="d-flex justify-space-between align-items-center">
+          <div class="d-flex flex-column">
+            <h2 class="profile-name">정한얼(haneolj)</h2>
+            <p class="profile-job-title">Backend Developer</p>
+          </div>
+          <a href="/about/this" class="btn-gradient-animated mt-2 mt-md-0 ms-md-auto">
+            <span>홈페이지 소개</span>
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
         <p class="profile-description d-none d-md-block"><a href="https://obsidian.md/" class="link-text">Obsidian</a>으로 꾸준히 공부한 내용을 기록 중이며, <a href="https://github.com/Haneol" class="link-text">Github</a>에 올려 관리 중입니다.<br/>아래 내용은 제 CS 공부 기록을 옵시디언에서 자동으로 Pull 받아 보여주는 페이지입니다.</p>
       </div>
     </div>

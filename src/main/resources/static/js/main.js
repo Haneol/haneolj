@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 그래프 초기화 상태를 추적하는 변수
+    let graphInitialized = false;
+
     // 탭 기능 초기화 함수
     const initTabs = () => {
         const tabLinks = document.querySelectorAll('.tab-link');
@@ -16,18 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetView) {
                 targetView.classList.add('active');
 
-                // 그래프 뷰 탭이 선택된 경우 그래프 다시 초기화
+                // 그래프 뷰 탭이 선택된 경우 그래프 초기화
                 if (viewType === 'graph' && typeof initGraphVisualization === 'function') {
-                    // 기존 SVG 요소 제거
+                    // 기존 SVG 요소가 있는지 확인
                     const svg = document.getElementById('graph-svg');
-                    if (svg) {
-                        svg.remove();
-                    }
 
-                    // 그래프 다시 초기화
-                    setTimeout(() => {
-                        initGraphVisualization();
-                    }, 50); // 약간의 지연을 두어 DOM 업데이트 후 실행
+                    // SVG가 없으면 초기화 (중복 초기화 방지)
+                    if (!svg) {
+                        setTimeout(() => {
+                            initGraphVisualization();
+                            graphInitialized = true;
+                        }, 50);
+                    }
                 }
             }
 
@@ -48,6 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const savedTab = document.querySelector(`[data-view="${savedView}"]`);
             if (savedTab) {
                 setActiveTab(savedTab);
+            }
+        } else {
+            // 저장된 뷰가 없으면 카테고리 뷰를 기본값으로 설정
+            const categoryTab = document.querySelector('[data-view="category"]');
+            if (categoryTab) {
+                setActiveTab(categoryTab);
             }
         }
     };
