@@ -15,12 +15,15 @@
       </button>
     </div>
 
+    <!-- 모바일 목차 오버레이 (처음에는 숨겨져 있음) -->
+    <div id="mobile-toc-overlay"></div>
+
     <!-- 모바일 목차 팝업 (처음에는 숨겨져 있음) -->
     <div id="mobile-toc" class="mobile-toc d-md-none">
       <div class="mobile-toc-container">
         <div class="mobile-toc-header">
-          <button id="toc-close-btn" class="btn-close"></button>
           <h5>목차</h5>
+          <button id="toc-close-btn" class="btn-close">×</button>
         </div>
         <div class="mobile-toc-body">
           <!-- 카테고리 트리 (사이드바와 동일한 내용) -->
@@ -62,7 +65,7 @@
                   <i class="fas fa-plus-circle"></i>
                   작성일: <span th:text="${contentCreatedAt}">2025.01.04</span>
               </span>
-                        <span>
+              <span>
                   <i class="far fa-calendar-alt"></i>
                   수정일: <span th:text="${contentLastModified}">2025.01.04</span>
               </span>
