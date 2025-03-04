@@ -465,6 +465,14 @@
   color: #EF4444;
 }
 
+.markdown-content .callout-hint {
+  border-left-color: #10B981;
+}
+
+.markdown-content .callout-hint .callout-title-icon {
+  color: #10B981;
+}
+
 /* 사이드바 스타일 */
 .sidebar {
   background-color: var(--gray-50);
