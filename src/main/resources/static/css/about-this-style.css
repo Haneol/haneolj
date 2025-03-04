@@ -2,8 +2,8 @@
   margin: 0 auto;
   width: 100%;
   max-width: 800px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .about-content {
@@ -60,6 +60,10 @@
 }
 
 @media (max-width: 576px) {
+  .about-content {
+    padding: 1em;
+  }
+
   .shields-container img {
     height: 24px;
   }
