@@ -15,15 +15,30 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetView = document.getElementById(`${viewType}-view`);
             if (targetView) {
                 targetView.classList.add('active');
+
+                // 그래프 뷰 탭이 선택된 경우 그래프 다시 초기화
+                if (viewType === 'graph' && typeof initGraphVisualization === 'function') {
+                    // 기존 SVG 요소 제거
+                    const svg = document.getElementById('graph-svg');
+                    if (svg) {
+                        svg.remove();
+                    }
+
+                    // 그래프 다시 초기화
+                    setTimeout(() => {
+                        initGraphVisualization();
+                    }, 50); // 약간의 지연을 두어 DOM 업데이트 후 실행
+                }
             }
+
+            // 탭 변경 시 선택된 상태를 로컬 스토리지에 저장
+            localStorage.setItem('selectedView', viewType);
         };
 
         // 탭 클릭 시 이벤트 핸들러
         tabLinks.forEach(tab => {
             tab.addEventListener('click', () => {
                 setActiveTab(tab);
-                // 탭 변경 시 선택된 상태를 로컬 스토리지에 저장
-                localStorage.setItem('selectedView', tab.getAttribute('data-view'));
             });
         });
 
